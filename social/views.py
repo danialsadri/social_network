@@ -11,7 +11,7 @@ def home(request):
 
 def user_register(request):
     if request.user.is_authenticated:
-        return redirect('blog:index')
+        return redirect('social:home')
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
