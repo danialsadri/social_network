@@ -1,0 +1,14 @@
+{% extends 'parent/base.html' %}
+
+{% block title %}logged out form{% endblock %}
+
+{% block content %}
+    <h2>آیا مطمعن هستید که میخواهید خارج شوید؟</h2>
+    <br>
+    <a href="{% url 'social:home' %}">برگشت به صفحه اصلی</a>
+    <br>
+    <form method="post" novalidate>
+        {% csrf_token %}
+        <input type="submit" value="خروج">
+    </form>
+{% endblock %}
