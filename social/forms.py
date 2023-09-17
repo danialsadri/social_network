@@ -61,3 +61,24 @@ class LoginForm(forms.Form):
     username = forms.CharField(max_length=200, required=True, widget=forms.TextInput,
                                label='username or phone number or email')
     password = forms.CharField(max_length=200, required=True, widget=forms.PasswordInput)
+
+
+class TicketForm(forms.Form):
+    SUBJECT_CHOICES = (
+        ('پیشنهاد', 'پیشنهاد'),
+        ('انتقاد', 'انتقاد'),
+        ('گزارش', 'گزارش'),
+    )
+    name = forms.CharField(max_length=100, widget=forms.TextInput)
+    description = forms.CharField(max_length=500, widget=forms.Textarea)
+    email = forms.EmailField(max_length=100, widget=forms.EmailInput)
+    phone_number = forms.CharField(max_length=11, widget=forms.TextInput)
+    subject = forms.ChoiceField(choices=SUBJECT_CHOICES, widget=forms.Select)
+
+    def clean_phone_number(self):
+        phone_number = self.cleaned_data.get('phone_number')
+        if phone_number:
+            if not phone_number.isnumeric():
+                raise forms.ValidationError('شماره تلفن عددی نیست')
+            else:
+                return phone_number

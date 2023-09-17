@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .forms import *
 from django.contrib.auth import authenticate, login, logout
+from django.core.mail import send_mail
 
 
 def home(request):
@@ -64,3 +65,16 @@ def user_logout(request):
         logout(request)
         return redirect('social:home')
     return render(request, 'registration/logged_out.html')
+
+
+def ticket(request):
+    if request.method == 'POST':
+        form = TicketForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            description = f"{cd['name']}\n{cd['email']}\n{cd['phone_number']}\n\n{cd['description']}"
+            send_mail(cd['subject'], description, 'danielsadri01@gmail.com', ['danielsadri01@gmail.com'], False)
+            return render(request, 'forms/ticket_done.html')
+    else:
+        form = TicketForm()
+    return render(request, 'forms/ticket.html', {'form': form})
