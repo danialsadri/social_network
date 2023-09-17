@@ -16,3 +16,12 @@ class UserAdmin(BaseUserAdmin):
         ('Permissions', {'fields': ['is_active', 'is_staff', 'is_superuser']}),
         ('Additional information', {'fields': ['phone_number', 'biography', 'job', 'date_of_birth', 'photo']}),
     ]
+
+
+@admin.register(Post)
+class PostAdmin(admin.ModelAdmin):
+    list_display = ['author', 'created']
+    list_filter = ['created']
+    search_fields = ['description']
+    raw_id_fields = ['author']
+    ordering = ['created']

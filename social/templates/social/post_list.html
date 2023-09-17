@@ -1,0 +1,14 @@
+{% extends 'parent/base.html' %}
+
+{% block title %}post list{% endblock %}
+
+{% block content %}
+    <h1>Post List</h1>
+    <hr>
+	{% for post in posts %}
+		<p>{{ post.description|truncatewords:10|linebreaks }}</p>
+        <br>
+        Published at {{ post.created }} by {{ post.author }}
+        <hr>
+	{% endfor %}
+{% endblock %}

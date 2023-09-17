@@ -9,6 +9,8 @@ from django.core.mail import send_mail
 from django.contrib.auth.views import (PasswordChangeView, PasswordChangeDoneView, PasswordResetView,
                                        PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView)
 
+from .models import Post
+
 
 def home(request):
     return render(request, 'social/home.html')
@@ -110,3 +112,11 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
 
 class CustomPasswordResetCompleteView(PasswordResetCompleteView):
     template_name = 'registration/password_reset_complete.html'
+
+
+def post_list(request):
+    posts = Post.objects.all()
+    context = {
+        'posts': posts,
+    }
+    return render(request, 'social/post_list.html', context)
