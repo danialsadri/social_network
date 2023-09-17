@@ -1,0 +1,13 @@
+{% extends 'parent/base.html' %}
+
+{% block title %}register form{% endblock %}
+
+
+{% block content %}
+    <form action="" method="post" novalidate>
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        {{ form.as_p }}
+        <input type="submit" value="register">
+    </form>
+{% endblock %}

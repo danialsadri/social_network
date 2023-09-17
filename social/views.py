@@ -1,12 +1,40 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from .forms import LoginForm
+from .forms import *
 from django.contrib.auth import authenticate, login, logout
 
 
 def home(request):
     return render(request, 'social/home.html')
+
+
+def user_register(request):
+    if request.user.is_authenticated:
+        return redirect('blog:index')
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data.get('password1'))
+            user.save()
+            return render(request, 'registration/register_done.html', {'user': user})
+    else:
+        form = RegisterForm()
+    return render(request, 'registration/register.html', {'form': form})
+
+
+@login_required
+def edit_user(request):
+    if request.method == 'POST':
+        form = UserEditForm(data=request.POST, files=request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('social:home')
+    else:
+        form = UserEditForm(instance=request.user)
+    context = {'form': form}
+    return render(request, 'registration/edit_user.html', context)
 
 
 def user_login(request):

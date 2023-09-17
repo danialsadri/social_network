@@ -1,0 +1,12 @@
+{% extends 'parent/base.html' %}
+
+{% block title %}edit user form{% endblock %}
+
+
+{% block content %}
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="edit">
+    </form>
+{% endblock %}
