@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from taggit.managers import TaggableManager
 
 
 class User(AbstractUser):
@@ -15,6 +16,7 @@ class Post(models.Model):
     description = models.TextField(max_length=500)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    tags = TaggableManager()
 
     class Meta:
         ordering = ['-created']

@@ -7,8 +7,9 @@
     <hr>
 	{% for post in posts %}
 		<p>{{ post.description|truncatewords:10|linebreaks }}</p>
-        <br>
         Published at {{ post.created }} by {{ post.author }}
+        <br><br>
+        {{ post.tags.all|join:', ' }}
         <hr>
 	{% endfor %}
 {% endblock %}
