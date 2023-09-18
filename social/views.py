@@ -180,7 +180,15 @@ def post_delete(request, post_id):
     if request.method == 'POST':
         post.delete()
         return redirect('social:profile')
-    return render(request, 'social/image_delete.html', {'post': post})
+    return render(request, 'social/post_delete.html', {'post': post})
+
+
+def image_delete(request, image_id):
+    image = get_object_or_404(Image, id=image_id)
+    if request.method == 'POST':
+        image.delete()
+        return redirect('social:profile')
+    return render(request, 'social/image_delete.html', {'image': image})
 
 
 def profile(request):

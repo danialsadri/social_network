@@ -9,6 +9,7 @@
         {{ form.as_p }}
         {% for image in post.images.all %}
             <img src="{{ image.image_file.url }}" alt="{{ image.description }}"><br>
+            <a href="{% url 'social:image_delete' image.id %}">حذف تصویر</a><br><br>
         {% endfor %}
         <input type="submit" value="create">
     </form>
