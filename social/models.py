@@ -33,6 +33,12 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('social:post_detail', kwargs={'post_id': self.id})
 
+    def delete(self, *args, **kwargs):
+        for image in self.images.all():
+            storage, path = image.image_file.storage, image.image_file.path
+            storage.delete(path)
+        super().delete(*args, **kwargs)
+
 
 def get_image_file(instance, filename):
     return f"post_images/{datetime.now().strftime('%Y/%m/%d')}/{filename}"
@@ -53,3 +59,8 @@ class Image(models.Model):
 
     def __str__(self):
         return self.title
+
+    def delete(self, *args, **kwargs):
+        storage, path = self.image_file.storage, self.image_file.path
+        storage.delete(path)
+        super().delete(*args, **kwargs)
