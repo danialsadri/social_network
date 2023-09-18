@@ -1,7 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
-
-from social.models import User
+from .models import User, Post
 
 
 class RegisterForm(forms.ModelForm):
@@ -82,3 +81,9 @@ class TicketForm(forms.Form):
                 raise forms.ValidationError('شماره تلفن عددی نیست')
             else:
                 return phone_number
+
+
+class PostCreateForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['description', 'tags']

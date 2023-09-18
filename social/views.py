@@ -126,3 +126,18 @@ def post_list(request, tag_slug=None):
         'tag': tag,
     }
     return render(request, 'social/post_list.html', context)
+
+
+@login_required
+def post_create(request):
+    if request.method == 'POST':
+        form = PostCreateForm(data=request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            form.save_m2m()
+            return redirect('social:home')
+    else:
+        form = PostCreateForm()
+    return render(request, 'forms/post_create.html', {'form': form})
