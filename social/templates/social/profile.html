@@ -4,6 +4,7 @@
 
 
 {% block content %}
+    <a href="{% url 'social:post_create' %}">ایجاد پست</a>
     <table style="width: 80%; border: 2px solid black; text-align: center; direction: rtl;">
         <tr>
             <th>ردیف</th>
@@ -20,4 +21,7 @@
             </tr>
         {% endfor %}
     </table>
+    <a href="{% url 'social:logout' %}">خروج</a><br>
+    <a href="{% url 'social:password_change' %}">تغییر پسورد</a><br>
+    <a href="{% url 'social:edit_user' %}">تغییر حساب کاربری</a>
 {% endblock %}

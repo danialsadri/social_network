@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Third-Party Apps
     'taggit',
+
 ]
 
 MIDDLEWARE = [
@@ -129,3 +130,7 @@ EMAIL_HOST_USER = 'danielsadri01@gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_PASSWORD = 'wwqabsbaausczysa'
+
+
+# django-resized
+DJANGORESIZED_DEFAULT_NORMALIZE_ROTATION = True

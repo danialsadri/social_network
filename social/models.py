@@ -2,6 +2,8 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.urls import reverse
 from taggit.managers import TaggableManager
+from django_resized import ResizedImageField
+from datetime import datetime
 
 
 class User(AbstractUser):
@@ -30,3 +32,24 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('social:post_detail', kwargs={'post_id': self.id})
+
+
+def get_image_file(instance, filename):
+    return f"post_images/{datetime.now().strftime('%Y/%m/%d')}/{filename}"
+
+
+class Image(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='images')
+    image_file = ResizedImageField(upload_to=get_image_file, size=[600, 400], crop=['middle', 'center'], quality=100)
+    title = models.CharField(max_length=100, blank=True, null=True)
+    description = models.TextField(max_length=500, blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created']
+        indexes = [
+            models.Index(fields=['-created'])
+        ]
+
+    def __str__(self):
+        return self.title

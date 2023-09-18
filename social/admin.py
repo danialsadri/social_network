@@ -18,6 +18,13 @@ class UserAdmin(BaseUserAdmin):
     ]
 
 
+class ImageInline(admin.StackedInline):
+    model = Image
+    extra = 0
+    classes = ('collapse',)
+    show_change_link = True
+
+
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     list_display = ['author', 'description', 'created']
@@ -25,3 +32,12 @@ class PostAdmin(admin.ModelAdmin):
     search_fields = ['description']
     raw_id_fields = ['author']
     ordering = ['created']
+    inlines = [ImageInline]
+
+
+@admin.register(Image)
+class ImageAdmin(admin.ModelAdmin):
+    list_display = ['post', 'title', 'created']
+    list_filter = ['created']
+    search_fields = ['title', 'description']
+    raw_id_fields = ['post']
