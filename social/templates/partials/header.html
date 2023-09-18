@@ -1,0 +1,6 @@
+{% if request.user.is_authenticated %}
+    <a href="{% url 'social:profile' %}">profile</a><br><br>
+{% else %}
+    <a href="{% url 'social:register' %}">register</a>
+    <a href="{% url 'social:login' %}">login</a>
+{% endif %}

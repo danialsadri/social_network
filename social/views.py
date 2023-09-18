@@ -154,3 +154,8 @@ def post_create(request):
     else:
         form = PostCreateForm()
     return render(request, 'forms/post_create.html', {'form': form})
+
+
+def profile(request):
+    posts = Post.objects.filter(author=request.user)
+    return render(request, 'social/profile.html', {'posts': posts})
