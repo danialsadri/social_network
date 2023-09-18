@@ -1,7 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
+from taggit.models import Tag
 
 from .forms import *
 from django.contrib.auth import authenticate, login, logout
@@ -114,9 +115,14 @@ class CustomPasswordResetCompleteView(PasswordResetCompleteView):
     template_name = 'registration/password_reset_complete.html'
 
 
-def post_list(request):
+def post_list(request, tag_slug=None):
     posts = Post.objects.all()
+    tag = None
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        posts = Post.objects.filter(tags__in=[tag])
     context = {
         'posts': posts,
+        'tag': tag,
     }
     return render(request, 'social/post_list.html', context)
