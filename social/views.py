@@ -175,6 +175,14 @@ def post_update(request, post_id):
     return render(request, 'forms/post_update.html', {'form': form, 'post': post})
 
 
+def post_delete(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    if request.method == 'POST':
+        post.delete()
+        return redirect('social:profile')
+    return render(request, 'social/image_delete.html', {'post': post})
+
+
 def profile(request):
     posts = Post.objects.filter(author=request.user)
     return render(request, 'social/profile.html', {'posts': posts})

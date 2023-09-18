@@ -1,0 +1,13 @@
+{% extends 'parent/base.html' %}
+
+{% block title %}image delete{% endblock %}
+
+
+{% block content %}
+    <h2>ایا از حذف پست مطمعن هستید</h2><br>
+    <a href="{% url 'social:profile' %}">برگشت به پروفایل</a><br><br>
+    <form action="" method="post" novalidate>
+        {% csrf_token %}
+        <input type="submit" value="delete">
+    </form>
+{% endblock %}
