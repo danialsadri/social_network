@@ -8,7 +8,7 @@
     {% endif %}
     <hr>
     {% for post in posts %}
-        <p>{{ post.description|truncatewords:10|linebreaks }}</p>
+        <p><a href="{{ post.get_absolute_url }}">{{ post.description|truncatewords:10|linebreaks }}</a></p>
         Published at {{ post.created }} by {{ post.author }}
         <br><br>
         {% for tag in post.tags.all %}

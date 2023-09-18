@@ -128,6 +128,14 @@ def post_list(request, tag_slug=None):
     return render(request, 'social/post_list.html', context)
 
 
+def post_detail(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    context = {
+        'post': post,
+    }
+    return render(request, 'social/post_detail.html', context)
+
+
 @login_required
 def post_create(request):
     if request.method == 'POST':
