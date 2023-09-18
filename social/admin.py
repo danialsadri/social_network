@@ -20,7 +20,7 @@ class UserAdmin(BaseUserAdmin):
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ['author', 'created']
+    list_display = ['author', 'description', 'created']
     list_filter = ['created']
     search_fields = ['description']
     raw_id_fields = ['author']
