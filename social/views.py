@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
@@ -194,3 +194,18 @@ def image_delete(request, image_id):
 def profile(request):
     posts = Post.objects.filter(author=request.user)
     return render(request, 'social/profile.html', {'posts': posts})
+
+
+def post_search(request):
+    query = None
+    results = []
+    if 'query' in request.GET:
+        form = SearchForm(request.GET)
+        if form.is_valid():
+            query = form.cleaned_data.get('query')
+            results = Post.objects.filter(Q(description__icontains=query))
+    context = {
+        'results': results,
+        'query': query
+    }
+    return render(request, 'social/search.html', context)

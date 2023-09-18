@@ -5,3 +5,8 @@
     <a href="{% url 'social:register' %}">register</a>
     <a href="{% url 'social:login' %}">login</a>
 {% endif %}
+
+<form action="{% url 'social:post_search' %}" method="get" novalidate>
+    <input type="text" name="query" placeholder="لطفا کلمه خود را سرچ کنید...">
+    <input type="submit" value="search"><br><br>
+</form>

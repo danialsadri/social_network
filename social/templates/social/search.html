@@ -1,0 +1,12 @@
+{% extends 'parent/base.html' %}
+
+{% block title %}search form{% endblock %}
+
+{% block content %}
+	<span>{{ results|length }} تعداد </span> <br> <span>نتیجه نتایج برای {{ query }}</span><br>
+    <hr>
+    {% for post in results %}
+    	<h2><a href="{{ post.get_absolute_url }}">{{ post.description|truncatewords:10 }}</a></h2>
+        <hr>
+    {% endfor %}
+{% endblock %}
