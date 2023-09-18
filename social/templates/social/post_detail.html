@@ -5,9 +5,9 @@
 
 {% block content %}
     <div style="text-align: center">
-    {% for image in post.images.all %}
-        <img src="{{ image.image_file.url }}" alt="{{ image.title }}"><br>
-    {% endfor %}
+        {% for image in post.images.all %}
+            <img src="{{ image.image_file.url }}" alt="{{ image.title }}"><br>
+        {% endfor %}
         <p>{{ post.description|truncatewords:10|linebreaks }}</p>
         <p>Published at {{ post.created }} by {{ post.author }}</p>
         <br><br>
@@ -19,6 +19,26 @@
         <h2>Similar posts</h2>
         {% for post in similar_post %}
             <p><a href="{{ post.get_absolute_url }}">{{ post.description|truncatewords:10|linebreaks }}</a></p>
+        {% endfor %}
+        <hr>
+        <hr>
+        <h2>ثبت کامنت</h2>
+        <form action="{% url 'social:post_comment' post.id %}" method="post" novalidate>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="send">
+        </form>
+        <hr>
+        <hr>
+        <h2>کامنت ها</h2>
+        {% with comments.count as cm_count %}
+    	    <h3>{{ cm_count }} comment{{ cm_count|pluralize }} </h3>
+        {% endwith %}
+        <hr>
+        {% for comment in comments %}
+            <h4>{{ comment.post.author.username }}</h4>
+            <p>{{ comment.description }}</p>
+            <hr>
         {% endfor %}
     </div>
 {% endblock %}

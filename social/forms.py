@@ -1,6 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from .models import User, Post
+from .models import User, Post, Comment
 
 
 class RegisterForm(forms.ModelForm):
@@ -103,3 +103,9 @@ class PostUpdateForm(forms.ModelForm):
 
 class SearchForm(forms.Form):
     query = forms.CharField()
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['description']

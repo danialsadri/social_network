@@ -41,3 +41,11 @@ class ImageAdmin(admin.ModelAdmin):
     list_filter = ['created']
     search_fields = ['title', 'description']
     raw_id_fields = ['post']
+
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ['post', 'description', 'created']
+    list_filter = ['created', 'updated']
+    search_fields = ['description']
+    raw_id_fields = ['post']
