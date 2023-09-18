@@ -1,12 +1,15 @@
 {% extends 'parent/base.html' %}
 
-{% block title %}post create form{% endblock %}
+{% block title %}post update form{% endblock %}
 
 
 {% block content %}
     <form action="" method="post" enctype="multipart/form-data" novalidate>
         {% csrf_token %}
         {{ form.as_p }}
+        {% for image in post.images.all %}
+            <img src="{{ image.image_file.url }}" alt="{{ image.description }}"><br>
+        {% endfor %}
         <input type="submit" value="create">
     </form>
 {% endblock %}

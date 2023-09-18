@@ -10,8 +10,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.core.mail import send_mail
 from django.contrib.auth.views import (PasswordChangeView, PasswordChangeDoneView, PasswordResetView,
                                        PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView)
-
-from .models import Post
+from .models import Post, Image
 
 
 def home(request):
@@ -144,16 +143,36 @@ def post_detail(request, post_id):
 @login_required
 def post_create(request):
     if request.method == 'POST':
-        form = PostCreateForm(data=request.POST)
+        form = PostCreateForm(data=request.POST, files=request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
             post.save()
             form.save_m2m()
-            return redirect('social:home')
+            Image.objects.create(post=post, image_file=form.cleaned_data['image1'])
+            Image.objects.create(post=post, image_file=form.cleaned_data['image2'])
+            return redirect('social:profile')
     else:
         form = PostCreateForm()
     return render(request, 'forms/post_create.html', {'form': form})
+
+
+@login_required
+def post_update(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    if request.method == 'POST':
+        form = PostUpdateForm(data=request.POST, files=request.FILES, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            form.save_m2m()
+            Image.objects.create(post=post, image_file=form.cleaned_data['image1'])
+            Image.objects.create(post=post, image_file=form.cleaned_data['image2'])
+            return redirect('social:profile')
+    else:
+        form = PostUpdateForm(instance=post)
+    return render(request, 'forms/post_update.html', {'form': form, 'post': post})
 
 
 def profile(request):
