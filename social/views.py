@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count, Q
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -117,14 +118,22 @@ class CustomPasswordResetCompleteView(PasswordResetCompleteView):
 
 def post_list(request, tag_slug=None):
     posts = Post.objects.all()
+    # filter by tag
     tag = None
     if tag_slug:
         tag = get_object_or_404(Tag, slug=tag_slug)
         posts = Post.objects.filter(tags__in=[tag])
-    context = {
-        'posts': posts,
-        'tag': tag,
-    }
+
+    # filter by pagination
+    paginator = Paginator(posts, 1)
+    page_number = request.GET.get('page', 1)
+    try:
+        posts = paginator.page(page_number)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    context = {'posts': posts, 'tag': tag}
     return render(request, 'social/post_list.html', context)
 
 
