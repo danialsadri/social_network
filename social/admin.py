@@ -25,6 +25,13 @@ class ImageInline(admin.StackedInline):
     show_change_link = True
 
 
+class CommentInline(admin.StackedInline):
+    model = Comment
+    extra = 0
+    classes = ('collapse',)
+    show_change_link = True
+
+
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     list_display = ['author', 'description', 'created']
@@ -32,7 +39,7 @@ class PostAdmin(admin.ModelAdmin):
     search_fields = ['description']
     raw_id_fields = ['author']
     ordering = ['created']
-    inlines = [ImageInline]
+    inlines = [ImageInline, CommentInline]
 
 
 @admin.register(Image)
