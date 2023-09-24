@@ -39,7 +39,7 @@ def edit_user(request):
         form = UserEditForm(data=request.POST, files=request.FILES, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect('social:home')
+            return redirect('social:profile')
     else:
         form = UserEditForm(instance=request.user)
     context = {'form': form}
