@@ -19,6 +19,8 @@
         <h2>Similar posts</h2>
         {% for post in similar_post %}
             <p><a href="{{ post.get_absolute_url }}">{{ post.description|truncatewords:10|linebreaks }}</a></p>
+        {% empty %}
+            <p>There are no similar posts</p>
         {% endfor %}
         <hr>
         <hr>
@@ -32,7 +34,7 @@
         <hr>
         <h2>کامنت ها</h2>
         {% with comments.count as cm_count %}
-    	    <h3>{{ cm_count }} comment{{ cm_count|pluralize }} </h3>
+            <h3>{{ cm_count }} comment{{ cm_count|pluralize }} </h3>
         {% endwith %}
         <hr>
         {% for comment in comments %}
