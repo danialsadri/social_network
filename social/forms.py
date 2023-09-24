@@ -18,6 +18,12 @@ class RegisterForm(forms.ModelForm):
         if password1 and password2 and password1 != password2:
             raise ValidationError('پسورد ها باید مطابقت داشته باشند')
 
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if User.objects.filter(username=username).exists():
+            raise forms.ValidationError('username already exists')
+        return username
+
     def clean_phone_number(self):
         phone_number = self.cleaned_data.get('phone_number')
         if User.objects.filter(phone_number=phone_number).exists():
