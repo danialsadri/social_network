@@ -57,7 +57,7 @@ def user_login(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return redirect('social:home')
+                    return redirect('social:profile')
                 else:
                     return HttpResponse('this account is disabled')
             else:
