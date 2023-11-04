@@ -5,6 +5,7 @@
 
 {% block content %}
     <a href="{% url 'social:post_create' %}">ایجاد پست</a>
+    <h1>پست های ایجاد شده</h1>
     <table style="width: 80%; border: 2px solid black; text-align: center; direction: rtl;">
         <tr>
             <th>ردیف</th>
@@ -18,6 +19,19 @@
                 <td><a href="{{ post.get_absolute_url }}">{{ post.description|truncatewords:2 }}</a></td>
                 <td><a href="{% url 'social:post_update' post.id %}">ویرایش</a></td>
                 <td><a href="{% url 'social:post_delete' post.id %}">حذف</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+    <h1>پست های ذخیره شده</h1>
+    <table style="width: 80%; border: 2px solid black; text-align: center; direction: rtl;">
+        <tr>
+            <th>ردیف</th>
+            <th>پست</th>
+        </tr>
+        {% for post in saved_posts %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td><a href="{{ post.get_absolute_url }}">{{ post.description|truncatewords:2 }}</a></td>
             </tr>
         {% endfor %}
     </table>

@@ -209,7 +209,8 @@ def image_delete(request, image_id):
 
 def profile(request):
     posts = Post.objects.filter(author=request.user)
-    return render(request, 'social/profile.html', {'posts': posts})
+    saved_posts = request.user.saved_posts.all()
+    return render(request, 'social/profile.html', {'posts': posts, 'saved_posts': saved_posts})
 
 
 def post_search(request):
