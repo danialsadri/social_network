@@ -278,5 +278,7 @@ def save_post(request):
         else:
             post.saved_by.add(user)
             saved = True
-        return JsonResponse({'saved': saved})
-    return JsonResponse({'error': 'Invalid request'})
+        response_data = {'saved': saved}
+    else:
+        response_data = {'error': 'Invalid post id'}
+    return JsonResponse(response_data)
