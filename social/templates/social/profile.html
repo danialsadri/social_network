@@ -20,6 +20,8 @@
                 <td><a href="{% url 'social:post_update' post.id %}">ویرایش</a></td>
                 <td><a href="{% url 'social:post_delete' post.id %}">حذف</a></td>
             </tr>
+        {% empty %}
+            <p>پست ایجاد شده ای وجود ندارد</p>
         {% endfor %}
     </table>
     <h1>پست های ذخیره شده</h1>
@@ -33,6 +35,8 @@
                 <td>{{ forloop.counter }}</td>
                 <td><a href="{{ post.get_absolute_url }}">{{ post.description|truncatewords:2 }}</a></td>
             </tr>
+        {% empty %}
+            <p>پست ذخیره شده ای وجود ندارد</p>
         {% endfor %}
     </table>
     <a href="{% url 'social:logout' %}">خروج</a><br>
