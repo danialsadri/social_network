@@ -7,12 +7,12 @@
 {% block content %}
     <hr>
     {% for user in users %}
-        <a href="#">{{ user.username }}</a><br><br>
+        <a href="{{ user.get_absolute_url }}">{{ user.username }}</a><br><br>
         {% with user=request.user %}
             {% if user.photo %}
-                <a href="{{ user.photo.url }}"><img src="{% thumbnail user.photo 200x0 quality=80 %}" alt=""></a>
+                <a href="{{ user.get_absolute_url }}"><img src="{% thumbnail user.photo 200x0 quality=80 %}" alt=""></a>
             {% else %}
-                <img src="{% static 'images/profile/Avatar.png' %}" alt="" style="width: 200px;">
+                <a href="{{ user.get_absolute_url }}"><img src="{% static 'images/profile/Avatar.png' %}" alt="" style="width: 200px;"></a>
             {% endif %}
         {% endwith %}
         <hr>

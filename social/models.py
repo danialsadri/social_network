@@ -13,6 +13,9 @@ class User(AbstractUser):
     date_of_birth = models.DateField(blank=True, null=True)
     photo = models.ImageField(upload_to='images/', blank=True, null=True)
 
+    def get_absolute_url(self):
+        return reverse("social:user_detail", args=[self.username])
+
 
 class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')

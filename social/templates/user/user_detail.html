@@ -1,0 +1,21 @@
+{% extends 'parent/base.html' %}
+{% load thumbnail %}
+{% load static %}
+
+{% block title %}user detail{% endblock %}
+
+{% block content %}
+    <a href="#">{{ user.username }}</a><br><br>
+    <button>Follow/Unfollow</button><br><br>
+    {% with user=request.user %}
+        {% if user.photo %}
+            <img src="{% thumbnail user.photo 200x0 quality=80 %}" alt="">
+        {% else %}
+            <img src="{% static 'images/profile/Avatar.png' %}" alt="" style="width: 200px;">
+        {% endif %}
+    {% endwith %}
+{#    {% with total_followers=user.followers.count total_followings=user.following.count %}#}
+{#        <p>{{ total_followers }} Follower{{ total_followers|pluralize }}</p>#}
+{#        <p>{{ total_followings }} Following{{ total_followings|pluralize }}</p>#}
+{#    {% endwith %}#}
+{% endblock %}
