@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Third-Party Apps
     'taggit',
+    'easy_thumbnails',
 
 ]
 
@@ -131,6 +132,8 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_PASSWORD = 'wwqabsbaausczysa'
 
-
 # django-resized
 DJANGORESIZED_DEFAULT_NORMALIZE_ROTATION = True
+
+# easy_thumbnails
+THUMBNAIL_DEBUG = True
