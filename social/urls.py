@@ -27,4 +27,5 @@ urlpatterns = [
     path('post/comment/<int:post_id>/', views.post_comment, name='post_comment'),
     path('like_post/', views.like_post, name='like_post'),
     path('save_post/', views.save_post, name='save_post'),
+    path('user/list/', views.user_list, name='user_list'),
 ]

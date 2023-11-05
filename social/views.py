@@ -283,3 +283,9 @@ def save_post(request):
     else:
         response_data = {'error': 'Invalid post id'}
     return JsonResponse(response_data)
+
+
+@login_required
+def user_list(request):
+    users = User.objects.filter(is_active=True)
+    return render(request, 'user/user_list.html', {'users': users})
