@@ -207,6 +207,7 @@ def image_delete(request, image_id):
     return render(request, 'social/image_delete.html', {'image': image})
 
 
+@login_required
 def profile(request):
     posts = Post.objects.filter(author=request.user)
     saved_posts = request.user.saved_posts.all()
