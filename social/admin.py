@@ -56,3 +56,11 @@ class CommentAdmin(admin.ModelAdmin):
     list_filter = ['created', 'updated']
     search_fields = ['description']
     raw_id_fields = ['post']
+
+
+@admin.register(Contact)
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ['user_from', 'user_to', 'created']
+    list_filter = ['created']
+    search_fields = ['user_from', 'user_to']
+    raw_id_fields = ['user_from', 'user_to']
