@@ -29,4 +29,5 @@ urlpatterns = [
     path('save_post/', views.save_post, name='save_post'),
     path('user/list/', views.user_list, name='user_list'),
     path('user/detail/<username>/', views.user_detail, name='user_detail'),
+    path('user/follow/', views.user_follow, name='user_follow'),
 ]

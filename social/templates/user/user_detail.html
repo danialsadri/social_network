@@ -11,12 +11,48 @@
     {% else %}
         <img src="{% static 'images/profile/Avatar.png' %}" alt="" style="width: 200px;">
     {% endif %}
-    <p><button>Follow/Unfollow</button></p>
+    {% if request.user == user %}
+    {% else %}
+        <p>
+            <button class="follow-button">
+                {% if request.user in user.followers.all %}
+                    Unfollow
+                {% else %}
+                    Follow
+                {% endif %}
+            </button>
+        </p>
+    {% endif %}
     <p>Biography: {{ user.biography|default:'---' }}</p>
     <p>Job: {{ user.job|default:'---' }}</p>
     <p>Date Of Birth: {{ user.date_of_birth|default:'---' }}</p>
     {% with total_followers=user.followers.count total_followings=user.following.count %}
-        <p>{{ total_followers }} Follower{{ total_followers|pluralize }}</p>
-        <p>{{ total_followings }} Following{{ total_followings|pluralize }}</p>
+        <span class="followers-count">{{ total_followers }} Follower{{ total_followers|pluralize }}</span>
+        <span class="followings-count">{{ total_followings }} Following{{ total_followings|pluralize }}</span>
     {% endwith %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+            integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+            crossorigin="anonymous" referrerpolicy="no-referrer">
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('.follow-button').click(function () {
+                var button = $(this);
+                $.ajax({
+                    type: 'POST',
+                    url: "{% url 'social:user_follow' %}",
+                    data: {'user_id': '{{ user.id }}', 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                    success: function (data) {
+                        if (data.follow) {
+                            button.text('Unfollow');
+                        } else {
+                            button.text('Follow');
+                        }
+                        $('.followers-count').text(data.followers_count + 'Follower{{ followers_count|pluralize }}');
+                        $('.followings-count').text(data.followings_count + 'Following{{ followings_count|pluralize }}');
+                    },
+                });
+            });
+        });
+    </script>
 {% endblock %}
