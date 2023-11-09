@@ -117,7 +117,7 @@ class CustomPasswordResetCompleteView(PasswordResetCompleteView):
 
 
 def post_list(request, tag_slug=None):
-    posts = Post.objects.all()
+    posts = Post.objects.select_related('author').all()
     # filter by tag
     tag = None
     if tag_slug:
