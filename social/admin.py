@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import *
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from .actions import make_activation, make_deactivation
 
 
 @admin.register(User)
@@ -34,13 +35,14 @@ class CommentInline(admin.StackedInline):
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ['author', 'description', 'created', 'total_likes']
+    list_display = ['author', 'description', 'created', 'total_likes', 'active']
     list_filter = ['created']
     search_fields = ['description']
     raw_id_fields = ['author']
     ordering = ['created']
-    list_editable = ['total_likes']
+    list_editable = ['total_likes', 'active']
     inlines = [ImageInline, CommentInline]
+    actions = [make_activation, make_deactivation]
 
 
 @admin.register(Image)
