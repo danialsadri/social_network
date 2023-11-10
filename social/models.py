@@ -25,12 +25,14 @@ class Post(models.Model):
     updated = models.DateTimeField(auto_now=True)
     likes = models.ManyToManyField(User, related_name="liked_posts", blank=True)
     saved_by = models.ManyToManyField(User, related_name='saved_posts', blank=True)
+    total_likes = models.PositiveBigIntegerField(default=0)
     tags = TaggableManager()
 
     class Meta:
         ordering = ['-created']
         indexes = [
-            models.Index(fields=['-created'])
+            models.Index(fields=['-created']),
+            models.Index(fields=['-total_likes']),
         ]
 
     def __str__(self):
