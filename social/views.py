@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count, Q
@@ -82,7 +83,9 @@ def ticket(request):
             cd = form.cleaned_data
             description = f"{cd['name']}\n{cd['email']}\n{cd['phone_number']}\n\n{cd['description']}"
             send_mail(cd['subject'], description, 'danielsadri01@gmail.com', ['danielsadri01@gmail.com'], False)
-            return render(request, 'forms/ticket_done.html')
+            messages.success(request, "ایمیل شما به پشتیبانی ارسال شد", "success")
+            return redirect("social:home")
+            # return render(request, 'forms/ticket_done.html')
     else:
         form = TicketForm()
     return render(request, 'forms/ticket.html', {'form': form})
