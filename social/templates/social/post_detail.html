@@ -1,4 +1,5 @@
 {% extends 'parent/base.html' %}
+{% load social_share %}
 {% load static %}
 
 {% block title %}post detail form{% endblock %}
@@ -30,6 +31,8 @@
                 Save
             {% endif %}
         </button>
+        <br>
+            <p>{% post_to_telegram 'share to telegram' post.get_absolute_url 'share to telegram'  'share to telegram' %}</p>
         <br>
         {% for tag in post.tags.all %}
             <a href="{% url 'social:post_list_tag' tag.slug %}">{{ tag.name }}</a>
